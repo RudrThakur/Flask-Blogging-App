@@ -16,19 +16,26 @@
             <form action="/login" method="POST">
                 <div class="login">
                     <div class="login-screen">
-                        <div class="app-title">
+                        <div class="app-title container">
                             <h1>Login</h1>
                         </div>
-                        <h6>Please Enter your credentials</h6>
+                        <div class="container m-auto text-center">
+                            <h6>Please Enter your credentials</h6>
+                        </div>
+          
                         <div class="login-form">
-                            <div class="control-group">
+                            <div class="form-group">
+                                <label for="username">UserId</label>
                                 <input type="text" class="form-control" value="" placeholder="username" name="userid">
-                                <label for="username"></label></div>
-                            <div class="control-group">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
                                 <input type="password" class="form-control" value="" placeholder="password"
                                     name="password">
-                                <label for="password"></label></div>
-                            <input type="submit" value="Log in" class="btn btn-primary">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Log in" class="btn btn-primary">
+                            </div>
                         </div>
                     </div>
                 </div>

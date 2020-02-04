@@ -21,17 +21,23 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-    credentialsDB = db.credentials
-    credentialsList = credentialsDB.find_one({'userid': request.form['userid']} and {'password': request.form['password']})
- 
-    if credentialsList is not None:
-        usersDB = db.users
-        userProfile = usersDB.find_one({'userid': request.form['userid']})
-        session['userid'] = userProfile['userid']
-        session['name'] = userProfile['name']
-        return home()
+
+    if not (request.form['userid'] or request.form['password']):
+        return('Please Fill All the credentials')
+
     else:
-        return('User Not Found')
+
+        credentialsDB = db.credentials
+        credentialsList = credentialsDB.find_one({'userid': request.form['userid']} and {'password': request.form['password']})
+        
+        if credentialsList is not None:
+            usersDB = db.users
+            userProfile = usersDB.find_one({'userid': request.form['userid']})
+            session['userid'] = userProfile['userid']
+            session['name'] = userProfile['name']
+            return home()
+        else:
+            return('User Not Found')
 
 @app.route('/changepassword', methods=['POST'])
 def changePassword():
@@ -43,6 +49,12 @@ def changePassword():
         return ('Password Updated Successfully !')
     else:
         return ('Password Update Failed')
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.clear()
+    return render_template('login.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0', port=5000)
