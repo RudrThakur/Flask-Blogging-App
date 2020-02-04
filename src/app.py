@@ -14,19 +14,20 @@ db = client.rudr
 
 @app.route('/')
 def home():
-    if 'username' not in session:
+    if 'name' not in session:
         return render_template('login.html')
     else:
         return render_template('index.html')
 
 @app.route('/login', methods=['POST'])
 def login():
-    usersDB = db.users
-    usersList = usersDB.find_one({'username': request.form['username']} and {'password': request.form['password']})
+    credentialsDB = db.credentials
+    credentialsList = credentialsDB.find_one({'userid': request.form['userid']} and {'password': request.form['password']})
  
-    if usersList is not None:
-        userProfile = {'username': request.form['username'], 'password' : request.form['password']}
-        session['username'] = userProfile['username']
+    if credentialsList is not None:
+        usersDB = db.users
+        userProfile = usersDB.find_one({'userid': request.form['userid']})
+        session['name'] = userProfile['name']
         return home()
     else:
         return('User Not Found')
