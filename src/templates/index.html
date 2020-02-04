@@ -2,12 +2,44 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Change Password</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <p>Hello {{ session['name'] }}</p>        
+    <div class="container m-auto w-100">
+        <div class="card m-auto p-4">
+            <p>Hello, {{ session['name'] }}</p>
+            <div class="text-right">
+                <a href="/profile">View Profile</a>
+            </div>
+        </div>
+  
+        <div class="row">
+            <div class="col-lg-4 m-auto p-3">
+                <form method="POST" action="/changepassword">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="userid" value="{{ session['userid']}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Enter your New Password</label>
+                        <input type="password" class="form-control" name="password_one">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm your Password</label>
+                        <input type="password" class="form-control" name="password_two">
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-success" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+         
     </body>
 </html>

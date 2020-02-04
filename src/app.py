@@ -27,10 +27,22 @@ def login():
     if credentialsList is not None:
         usersDB = db.users
         userProfile = usersDB.find_one({'userid': request.form['userid']})
+        session['userid'] = userProfile['userid']
         session['name'] = userProfile['name']
         return home()
     else:
         return('User Not Found')
+
+@app.route('/changepassword', methods=['POST'])
+def changePassword():
+    credentialsDB = db.credentials
+    credentialsList = credentialsDB.find_one_and_update({'_id': request.form['userid']} , {"$set" : {'password': request.form['password_one']}},
+    upsert = False)
+
+    if(credentialsList):
+        return ('Password Updated Successfully !')
+    else:
+        return ('Password Update Failed')
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0', port=5000)
