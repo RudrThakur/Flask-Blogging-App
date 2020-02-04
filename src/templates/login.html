@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>
+        Login-Flask
+    </title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<body>
+    <div class="container m-auto p-4">
+        <div class="card m-auto p-4">
+            <form action="/login" method="POST">
+                <div class="login">
+                    <div class="login-screen">
+                        <div class="app-title">
+                            <h1>Login</h1>
+                        </div>
+                        <h6>Please Enter your credentials</h6>
+                        <div class="login-form">
+                            <div class="control-group">
+                                <input type="text" class="form-control" value="" placeholder="username" name="username">
+                                <label for="username"></label></div>
+                            <div class="control-group">
+                                <input type="password" class="form-control" value="" placeholder="password"
+                                    name="password">
+                                <label for="password"></label></div>
+                            <input type="submit" value="Log in" class="btn btn-primary">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
