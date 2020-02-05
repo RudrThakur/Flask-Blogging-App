@@ -22,22 +22,49 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
 
-    if not (request.form['userid'] or request.form['password']):
+    if not (request.form['username'] or request.form['password']):
         return('Please Fill All the credentials')
 
     else:
 
-        credentialsDB = db.credentials
-        credentialsList = credentialsDB.find_one({'userid': request.form['userid']} and {'password': request.form['password']})
+        usersDB = db.users
+        usersList = usersDB.find_one({'username': request.form['username']} and {'password': request.form['password']})
         
-        if credentialsList is not None:
+        if usersList is not None:
             usersDB = db.users
-            userProfile = usersDB.find_one({'userid': request.form['userid']})
-            session['userid'] = userProfile['userid']
+            userProfile = usersDB.find_one({'username': request.form['username']})
+            session['username'] = userProfile['username']
             session['name'] = userProfile['name']
             return home()
         else:
             return('User Not Found')
+
+@app.route('/register', methods=['POST'])
+def register():
+
+    if not (request.form['username'] and request.form['password'] and request.form['name'] and
+    request.form['email'] and request.form['phone'] and
+    request.form['city'] and request.form['occupation']):
+        return('Please Fill All the credentials')
+
+    else:
+
+        usersDB = db.users
+        usersList = usersDB.find_one({'username': request.form['username']})
+        
+        if usersList is None:
+            userProfile = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
+            'password': request.form['password'], 'email': request.form['email'], 'phone': request.form['phone'],
+            'city': request.form['city'], 'occupation': request.form['occupation']} )
+            # session['username'] = userProfile['username']
+            # session['name'] = userProfile['name']
+            return home()
+        else:
+            return('Username Already Exists !')
+
+@app.route('/registrationpage', methods=['GET'])
+def registerationpage():
+    return render_template('register.html')
 
 @app.route('/changepassword', methods=['POST'])
 def changePassword():

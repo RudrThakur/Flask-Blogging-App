@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <title>
+        Register-Flask
+    </title>
+</head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<body>
+    <div class="container m-auto p-4 w-50">
+        <div class="card m-auto p-4">
+            <form action="/register" method="POST">
+                <div class="login">
+                    <div class="login-screen">
+                        <div class="app-title container">
+                            <h1>Registration</h1>
+                        </div>
+                        <div class="container m-auto text-center">
+                            <h6>Please Enter your Details</h6>
+                        </div>
+          
+                        <div class="login-form">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" value="" placeholder="Username" name="username">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" value="" placeholder="Name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" value="" placeholder="Password" name="password">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" value="" placeholder="Email"
+                                    name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Phone</label>
+                                <input type="text" class="form-control" value="" placeholder="Phone"
+                                    name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">City</label>
+                                <input type="text" class="form-control" value="" placeholder="City"
+                                    name="city">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Occupation</label>
+                                <input type="text" class="form-control" value="" placeholder="Occupation"
+                                    name="occupation">
+                            </div>
+                            <div class="container text-center m-auto">
+                                <div class="form-group">
+                                    <input type="submit" value="Register" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
