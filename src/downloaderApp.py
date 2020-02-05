@@ -19,4 +19,11 @@ def logLastLogin(username):
     updateLastLogin = { '$set' : {'last_login' : datetime.now()}}
     usersDB.update(lastLoginData, updateLastLogin)
 
+@app.task
+def changePassword(username, newPassword):
+    usersDB = db.users
+    userData = {'username':  username}
+    updatePassword = { '$set' : {'password' : newPassword}}
+    usersDB.update(userData, updatePassword)
+
     

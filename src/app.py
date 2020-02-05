@@ -27,24 +27,29 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
 
-    if not (request.form['username'] or request.form['password']):
+    if not (request.form['username'] and request.form['password']):
         flash('Please Fill All the credentials')
         return render_template('login.html')
 
     else:
 
         usersDB = db.users
-        usersList = usersDB.find_one({'username': request.form['username']} and {'password': request.form['password']})
-        
-        if usersList is not None:
-            usersDB = db.users
-            userProfile = usersDB.find_one({'username': request.form['username']})
-            session['username'] = userProfile['username']
-            session['name'] = userProfile['name']
-            logLastLogin.delay(session['username'])
-            return home()
+        userData = usersDB.find_one({'username': request.form['username']})
+
+        if userData:
+            if userData['password'] == request.form['password']:
+                usersDB = db.users
+                userProfile = usersDB.find_one({'username': request.form['username']})
+                session['username'] = userProfile['username']
+                session['name'] = userProfile['name']
+                logLastLogin.delay(session['username'])
+                return home()
+            else:
+                flash('Invalid Credentials')
+                return render_template('login.html')
         else:
-            return('User Not Found')
+            flash('User Not Found')
+            return render_template('login.html')
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -74,16 +79,21 @@ def register():
 def registerationpage():
     return render_template('register.html')
 
-@app.route('/changepassword', methods=['POST'])
-def changePassword():
-    credentialsDB = db.credentials
-    credentialsList = credentialsDB.find_one_and_update({'_id': request.form['userid']} , {"$set" : {'password': request.form['password_one']}},
-    upsert = False)
+@app.route('/loginpage', methods=['GET'])
+def loginpage():
+    return render_template('login.html')
 
-    if(credentialsList):
-        return ('Password Updated Successfully !')
+@app.route('/changepassword', methods=['POST'])
+def changeUserPassword():
+    usersDB = db.users
+    userProfile = usersDB.find_one({'username': request.form['username']})
+    updateStatus = changePassword.delay(session['username'], request.form['password'])
+    if updateStatus:
+        flash('Password Update Successfully')
+        return render_template('index.html', userProfile = userProfile)
     else:
-        return ('Password Update Failed')
+        flash('Sorry Something Went Wrong !')
+        return render_template('index.html', userProfile = userProfile)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
