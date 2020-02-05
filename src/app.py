@@ -1,9 +1,11 @@
 from flask import Flask
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
+from celery import Celery
 from pymongo import MongoClient
 from datetime import datetime
 import re
+from downloaderApp import *
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
@@ -19,6 +21,7 @@ def home():
     else:
         usersDB = db.users
         userProfile = usersDB.find_one({'username' : session['username']})
+        flash('Logged In Successfully')
         return render_template('index.html', userProfile = userProfile)
 
 @app.route('/login', methods=['POST'])
@@ -38,6 +41,7 @@ def login():
             userProfile = usersDB.find_one({'username': request.form['username']})
             session['username'] = userProfile['username']
             session['name'] = userProfile['name']
+            logLastLogin.delay(session['username'])
             return home()
         else:
             return('User Not Found')
