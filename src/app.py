@@ -86,7 +86,7 @@ def loginpage():
 @app.route('/changepassword', methods=['POST'])
 def changeUserPassword():
     usersDB = db.users
-    userProfile = usersDB.find_one({'username': request.form['username']})
+    userProfile = usersDB.find_one({'username': session['username']})
     updateStatus = changePassword.delay(session['username'], request.form['password'])
     if updateStatus:
         flash('Password Update Successfully')
