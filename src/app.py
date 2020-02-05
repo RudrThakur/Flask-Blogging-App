@@ -17,7 +17,9 @@ def home():
     if 'name' not in session:
         return render_template('login.html')
     else:
-        return render_template('index.html')
+        usersDB = db.users
+        userProfile = usersDB.find_one({'username' : session['username']})
+        return render_template('index.html', userProfile = userProfile)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -53,11 +55,11 @@ def register():
         usersList = usersDB.find_one({'username': request.form['username']})
         
         if usersList is None:
-            userProfile = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
+            userInsert = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
             'password': request.form['password'], 'email': request.form['email'], 'phone': request.form['phone'],
             'city': request.form['city'], 'occupation': request.form['occupation']} )
-            # session['username'] = userProfile['username']
-            # session['name'] = userProfile['name']
+            session['username'] = request.form['username']
+            session['name'] = request.form['name']
             return home()
         else:
             return('Username Already Exists !')
