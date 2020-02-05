@@ -25,7 +25,8 @@ def home():
 def login():
 
     if not (request.form['username'] or request.form['password']):
-        return('Please Fill All the credentials')
+        flash('Please Fill All the credentials')
+        return render_template('login.html')
 
     else:
 
@@ -47,7 +48,8 @@ def register():
     if not (request.form['username'] and request.form['password'] and request.form['name'] and
     request.form['email'] and request.form['phone'] and
     request.form['city'] and request.form['occupation']):
-        return('Please Fill All the credentials')
+        flash('Please Fill All the credentials')
+        return render_template('register.html')
 
     else:
 

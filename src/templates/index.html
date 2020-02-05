@@ -10,6 +10,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     </head>
+ 
+
     <body>
     <div class="container m-auto w-100">
         <div class="card m-auto p-4">
@@ -18,7 +20,7 @@
                 <a href="/logout" class="btn btn-danger">Logout</a>
             </div>
             <div class="text-left">
-                <a href="javascript:void">View Profile</a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#profilemodal">View Profile</a>
             </div>
         </div>
   
@@ -48,28 +50,30 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <h1>Your Profile</h1>
-
-            <div class="container m-auto">
-                <ul>
-                    <li>Name : {{ userProfile['name']}}</li>
-                </ul>
+            <div class="container m-auto table-bordered">
+                <div class="container m-auto p-2">
+                    <ul style="list-style: none;">
+                        <li><b>Username :</b> {{ userProfile['username']}}</li>
+                        <li><b>Name : </b>{{ userProfile['name']}}</li>
+                        <li><b>Email :</b> {{ userProfile['email']}}</li>
+                        <li><b>Phone :</b> {{ userProfile['phone']}}</li>
+                        <li><b>City :</b> {{ userProfile['city']}}</li>
+                        <li><b>Occupation :</b> {{ userProfile['occupation']}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
   </div>
-  
-         
     </body>
 </html>
