@@ -3,11 +3,7 @@ from flask_mail import Message
 from mailApp import *
 from pymongo import MongoClient
 from datetime import datetime
-
-app = Celery('downloaderApp', broker='amqp://localhost//', backend='db+mysql://root@localhost/flaskcelery')
-
-client = MongoClient('mongodb+srv://rudrthakur:rudrcmkt777@rudr-vh5fo.gcp.mongodb.net/test?retryWrites=true&w=majority')
-db = client.rudr
+import db
 
 #Celery Command
 #celery -A downloaderApp worker --pool=solo -l info
