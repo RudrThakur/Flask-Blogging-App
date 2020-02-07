@@ -1,18 +1,16 @@
-#imports
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
 from celery import Celery
 import db
 from datetime import datetime
 import re
-from downloaderApp import *
 import hashlib, binascii
+from downloaderApp import *
 
-#Initialise
+
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = '1234'
-#end
 
 #home
 @app.route('/')
