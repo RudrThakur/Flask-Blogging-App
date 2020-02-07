@@ -1,11 +1,11 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
 from celery import Celery
-import db
 from datetime import datetime
 import re
 import hashlib, binascii
 from downloaderApp import *
+from db import *
 
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ def home():
     if 'name' not in session:
         return render_template('login.html')
     else:
-        usersDB = db.users
+        usersDB = database()
         userProfile = usersDB.find_one({'username' : session['username']})
         flash('Logged In Successfully')
         return render_template('index.html', userProfile = userProfile)
@@ -33,12 +33,12 @@ def login():
             return render_template('login.html')
 
         else:
-            usersDB = db.users
+            usersDB = database()
             userData = usersDB.find_one({'username': request.form['username']})
 
             if userData:
                 if verify_password(userData['password'], request.form['password']):
-                    usersDB = db.users
+                    usersDB = database()
                     userProfile = usersDB.find_one({'username': request.form['username']})
                     session['username'] = userProfile['username']
                     session['name'] = userProfile['name']
@@ -76,8 +76,7 @@ def register():
             return render_template('register.html')
 
         else:
-
-            usersDB = db.users
+            usersDB = database()
             usersList = usersDB.find_one({'username': request.form['username']})
             
             if usersList is None:
@@ -104,7 +103,7 @@ def hash_password(password):
 #change user password
 @app.route('/changepassword', methods=['POST'])
 def changeUserPassword():
-    usersDB = db.users
+    usersDB = database()
     userData = {'username':  session['username']}
     updatePassword = { '$set' : {'password' : hash_password(request.form['new_password'])}}
     if usersDB.update(userData, updatePassword):
