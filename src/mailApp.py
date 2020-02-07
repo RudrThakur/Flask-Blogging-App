@@ -1,7 +1,9 @@
+#imports
 from flask import Flask
 from flask_mail import Mail, Message
 from flask import current_app  # use this to reference current application context
 
+#Initialise
 app = Flask(__name__)
 mail = Mail(app)
 
@@ -13,7 +15,9 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'rudrakshchandramukut@gmail.com'  # enter your email here
 app.config['MAIL_DEFAULT_SENDER'] = 'rudrakshchandramukut@gmail.com' # enter your email here
 app.config['MAIL_PASSWORD'] = 'rudrcmkt777' # enter your password here
+#end
 
+#Send Email
 def send_email(email_data):
     msg = Message(sender='rudrakshchandramukut@gmail.com',
                   recipients='rudrakshacmkt777@gmail.com')

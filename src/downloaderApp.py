@@ -1,6 +1,5 @@
+#imports
 from celery import Celery
-from flask_mail import Message
-from mailApp import *
 from pymongo import MongoClient
 from datetime import datetime
 import db
@@ -8,6 +7,7 @@ import db
 #Celery Command
 #celery -A downloaderApp worker --pool=solo -l info
 
+#Tasks
 @app.task
 def logLastLogin(username):
     usersDB = db.users
