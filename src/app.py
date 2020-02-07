@@ -6,6 +6,7 @@ from pymongo import MongoClient
 from datetime import datetime
 import re
 from downloaderApp import *
+import hashlib, binascii
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
@@ -24,64 +25,81 @@ def home():
         flash('Logged In Successfully')
         return render_template('index.html', userProfile = userProfile)
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
 
-    if not (request.form['username'] and request.form['password']):
-        flash('Please Fill All the credentials')
-        return render_template('login.html')
-
-    else:
-
-        usersDB = db.users
-        userData = usersDB.find_one({'username': request.form['username']})
-
-        if userData:
-            if userData['password'] == request.form['password']:
-                usersDB = db.users
-                userProfile = usersDB.find_one({'username': request.form['username']})
-                session['username'] = userProfile['username']
-                session['name'] = userProfile['name']
-                logLastLogin.delay(session['username'])
-                return home()
-            else:
-                flash('Invalid Credentials')
-                return render_template('login.html')
-        else:
-            flash('User Not Found')
+    if request.method == 'POST':
+        if not (request.form['username'] and request.form['password']):
+            flash('Please Fill All the credentials')
             return render_template('login.html')
 
-@app.route('/register', methods=['POST'])
+        else:
+
+            usersDB = db.users
+            userData = usersDB.find_one({'username': request.form['username']})
+
+            if userData:
+                if verify_password(userData['password'], request.form['password']):
+                    usersDB = db.users
+                    userProfile = usersDB.find_one({'username': request.form['username']})
+                    session['username'] = userProfile['username']
+                    session['name'] = userProfile['name']
+                    logLastLogin.delay(session['username'])
+                    return home()
+                else:
+                    flash('Invalid Credentials')
+                    return render_template('login.html')
+            else:
+                flash('User Not Found')
+                return render_template('login.html')
+    else:
+        return render_template('login.html')
+
+def verify_password(stored_password, provided_password):
+
+    salt = stored_password[:64]
+    stored_password = stored_password[64:]
+    pwdhash = hashlib.pbkdf2_hmac('sha512', 
+                                  provided_password.encode('utf-8'), 
+                                  salt.encode('ascii'), 
+                                  100000)
+    pwdhash = binascii.hexlify(pwdhash).decode('ascii')
+    return pwdhash == stored_password
+
+@app.route('/register', methods=['POST', 'GET'])
 def register():
 
-    if not (request.form['username'] and request.form['password'] and request.form['name'] and
-    request.form['email'] and request.form['phone'] and
-    request.form['city'] and request.form['occupation']):
-        flash('Please Fill All the credentials')
+    if request.method == 'POST':
+        if not (request.form['username'] and request.form['password'] and request.form['name'] and
+        request.form['email'] and request.form['phone'] and
+        request.form['city'] and request.form['occupation']):
+            flash('Please Fill All the credentials')
+            return render_template('register.html')
+
+        else:
+
+            usersDB = db.users
+            usersList = usersDB.find_one({'username': request.form['username']})
+            
+            if usersList is None:
+                userInsert = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
+                'password': hash_password(request.form['password']), 'email': request.form['email'], 'phone': request.form['phone'],
+                'city': request.form['city'], 'occupation': request.form['occupation']} )
+                session['username'] = request.form['username']
+                session['name'] = request.form['name']
+                return home()
+            else:
+                return('Username Already Exists !')
+    else:
         return render_template('register.html')
 
-    else:
+def hash_password(password):
 
-        usersDB = db.users
-        usersList = usersDB.find_one({'username': request.form['username']})
-        
-        if usersList is None:
-            userInsert = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
-            'password': request.form['password'], 'email': request.form['email'], 'phone': request.form['phone'],
-            'city': request.form['city'], 'occupation': request.form['occupation']} )
-            session['username'] = request.form['username']
-            session['name'] = request.form['name']
-            return home()
-        else:
-            return('Username Already Exists !')
-
-@app.route('/registrationpage', methods=['GET'])
-def registerationpage():
-    return render_template('register.html')
-
-@app.route('/loginpage', methods=['GET'])
-def loginpage():
-    return render_template('login.html')
+    salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
+                                salt, 100000)
+    pwdhash = binascii.hexlify(pwdhash)
+    return (salt + pwdhash).decode('ascii')
 
 @app.route('/changepassword', methods=['POST'])
 def changeUserPassword():
@@ -99,7 +117,6 @@ def changeUserPassword():
 def logout():
     session.clear()
     return render_template('login.html')
-
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0', port=5000)
