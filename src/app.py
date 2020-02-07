@@ -27,7 +27,7 @@ def home():
             flash('Logged In Successfully')
             return render_template('index.html', userProfile = userProfile)
         else:
-            flash('The Verification Code has been Sent to your email Account')
+            flash('Please Verify Your Account')
             return render_template('verifyaccount.html', userProfile = userProfile)
 
 
@@ -92,7 +92,7 @@ def register():
                 'verificationcode': verificationCode} )
                 session['username'] = request.form['username']
                 session['name'] = request.form['name']
-
+                flash('The Verification Code has been Sent to your email Account')
                 return home()
             else:
                 flash('Username Already Exists !')
@@ -135,8 +135,10 @@ def verifyUserAccount():
     if request.form['verification_code'] == userProfile['verificationcode']:
         userIndex = {'username':  session['username']}
         newUserState = { '$set' : {'isActive' : True}}
+        nullifyVerificationCode = { '$set' : {'verificationcode' : None}}
         if usersDB.update(userIndex, newUserState):
             flash('Account Verified Successfully')
+            usersDB.update(userIndex, nullifyVerificationCode)
         else:
             flash('Account Verification Failed')
 
