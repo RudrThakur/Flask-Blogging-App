@@ -16,10 +16,16 @@ mail_settings = {
 app.config.update(mail_settings)
 mail = Mail(app)
 
-def sendVerificationEmail(userEmail, verificationCode):
+@app.route('/')
+def home():
     with app.app_context():
         msg = Message(subject="Hello",
                       sender=app.config.get("MAIL_USERNAME"),
-                      recipients=[userEmail], # replace with your email for testing
-                      body="Your Verification Code is " + verificationCode)
+                      recipients=["rudrakshacmkt777@gmail.com"], # replace with your email for testing
+                      body="This is a test email I sent with Gmail and Python!")
         mail.send(msg)
+    return ('hello !')
+
+#main
+if __name__ == "__main__":
+    app.run(debug=True,host='0.0.0.0', port=5000)

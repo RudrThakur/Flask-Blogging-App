@@ -2,7 +2,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Welcome</title>
+    <title>
+        Verify Account
+    </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -67,11 +69,23 @@
             <div class="text-left">
                 <a href="javascript:void(0)" data-toggle="modal" data-target="#profilemodal">View Profile</a>
             </div>
-            <div class="text-right mb-4">
-                <a href="/changepassword" class="btn btn-primary">Change Password</a>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 m-auto p-3">
+                <form action="/verifyaccount" method="POST">
+                    <div class="form-group">
+                        <label>Enter the Verification Code</label>
+                        <input type="password" class="form-control" name="verification_code" id="verification_code">
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-success" value="Verify">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

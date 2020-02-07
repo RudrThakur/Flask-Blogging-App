@@ -1,16 +1,19 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
 import os
+import random
 from celery import Celery
 from datetime import datetime
 import re
 import hashlib, binascii
-from downloaderApp import *
+from taskworker import *
 from db import *
+from mailapp import *
 
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = '1234'
+usersDB = databaseUsers()
 
 #home
 @app.route('/')
@@ -18,10 +21,14 @@ def home():
     if 'name' not in session:
         return render_template('login.html')
     else:
-        usersDB = database()
         userProfile = usersDB.find_one({'username' : session['username']})
-        flash('Logged In Successfully')
-        return render_template('index.html', userProfile = userProfile)
+
+        if userProfile['isActive']:
+            flash('Logged In Successfully')
+            return render_template('index.html', userProfile = userProfile)
+        else:
+            flash('The Verification Code has been Sent to your email Account')
+            return render_template('verifyaccount.html', userProfile = userProfile)
 
 
 #login
@@ -33,12 +40,10 @@ def login():
             return render_template('login.html')
 
         else:
-            usersDB = database()
             userData = usersDB.find_one({'username': request.form['username']})
 
             if userData:
                 if verify_password(userData['password'], request.form['password']):
-                    usersDB = database()
                     userProfile = usersDB.find_one({'username': request.form['username']})
                     session['username'] = userProfile['username']
                     session['name'] = userProfile['name']
@@ -76,21 +81,28 @@ def register():
             return render_template('register.html')
 
         else:
-            usersDB = database()
             usersList = usersDB.find_one({'username': request.form['username']})
             
             if usersList is None:
+                verificationCode = generateVerificationCode()
+                sendVerificationEmail(request.form['email'], verificationCode)
                 userInsert = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
                 'password': hash_password(request.form['password']), 'email': request.form['email'], 'phone': request.form['phone'],
-                'city': request.form['city'], 'occupation': request.form['occupation']} )
+                'city': request.form['city'], 'occupation': request.form['occupation'], 'isActive': False, 
+                'verificationcode': verificationCode} )
                 session['username'] = request.form['username']
                 session['name'] = request.form['name']
+
                 return home()
             else:
                 flash('Username Already Exists !')
                 return render_template('register.html')
     else:
         return render_template('register.html')
+
+def generateVerificationCode():
+    code = random.randrange(1, 500000, 1)
+    return hash_password(str(code))
 
 def hash_password(password):
 
@@ -101,17 +113,34 @@ def hash_password(password):
     return (salt + pwdhash).decode('ascii')
 
 #change user password
-@app.route('/changepassword', methods=['POST'])
+@app.route('/changepassword', methods=['POST', 'GET'])
 def changeUserPassword():
-    usersDB = database()
-    userData = {'username':  session['username']}
-    updatePassword = { '$set' : {'password' : hash_password(request.form['new_password'])}}
-    if usersDB.update(userData, updatePassword):
-        flash('Password Updated')
+    if request.method == 'POST':
+        userIndex = {'username':  session['username']}
+        newUserPassword = { '$set' : {'password' : hash_password(request.form['new_password'])}}
+        if usersDB.update(userIndex, newUserPassword):
+            flash('Password Updated')
+        else:
+            flash('Password Update Failed')
+        return redirect('/')
     else:
-        flash('Password Update Failed')
-    return redirect('/')
+        userProfile = usersDB.find_one({'username': session['username']})
+        return render_template('changepassword.html', userProfile = userProfile)
 
+#verify Account
+@app.route('/verifyaccount', methods=['POST'])
+def verifyUserAccount():
+    userProfile = usersDB.find_one({'username': session['username']})
+
+    if request.form['verification_code'] == userProfile['verificationcode']:
+        userIndex = {'username':  session['username']}
+        newUserState = { '$set' : {'isActive' : True}}
+        if usersDB.update(userIndex, newUserState):
+            flash('Account Verified Successfully')
+        else:
+            flash('Account Verification Failed')
+
+    return redirect('/')
 
 #logout
 @app.route('/logout', methods=['GET', 'POST'])

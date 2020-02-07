@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from datetime import datetime
 import db
 
-app = Celery('downloaderApp', broker='amqp://localhost//', backend='db+mysql://root@localhost/flaskcelery')
+app = Celery('taskworker', broker='amqp://localhost//', backend='db+mysql://root@localhost/flaskcelery')
 #Celery Command
 #celery -A downloaderApp worker --pool=solo -l info
 
