@@ -104,14 +104,14 @@ def hash_password(password):
 @app.route('/changepassword', methods=['POST'])
 def changeUserPassword():
     usersDB = db.users
-    userProfile = usersDB.find_one({'username': session['username']})
-    updateStatus = changePassword.delay(session['username'], request.form['password'])
-    if updateStatus:
-        flash('Password Update Successfully')
-        return render_template('index.html', userProfile = userProfile)
+    userData = {'username':  session['username']}
+    updatePassword = { '$set' : {'password' : hash_password(request.form['new_password'])}}
+    if usersDB.update(userData, updatePassword):
+        flash('Password Updated')
     else:
-        flash('Sorry Something Went Wrong !')
-        return render_template('index.html', userProfile = userProfile)
+        flash('Password Update Failed')
+    return redirect('/')
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
