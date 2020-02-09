@@ -91,6 +91,32 @@
         </div>
     </div>
 
+    <div class="container card w-50 m-auto">
+        <div class="container" id="post-write-box">
+            <h5 class="text-primary text-center w3-hover-text-lime" id="post-write-header">Write Something</h5>
+            <hr>
+            <div class="container">
+                <form action="/writepost" method="POST">
+                  <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                  </div>
+                  <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea class="form-control" rows="5" id="content"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="image">Add an Image URL (Example - https://source.unsplash.com/user/rudrthakur/O8PjuNKatJ0):</label>
+                    <input type="text" class="form-control" id="image" name="image">
+                  </div>
+                  <div class="form-group text-center">
+                  <button type="submit" class="btn btn-primary">Post</button>
+                  </div>
+                </form>
+              </div>
+        </div>
+    </div>
+
     <!-- Javascript -->
     <script>
         function w3_open() {

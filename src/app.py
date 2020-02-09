@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = '1234'
 usersDB = databaseUsers()
+postsDB = databasePosts()
 
 #home
 @app.route('/')
@@ -143,6 +144,33 @@ def verifyUserAccount():
             flash('Account Verification Failed')
 
     return redirect('/')
+
+#My Posts
+@app.route('/myposts', methods=['GET', 'POST'])
+def getUserPosts():
+
+    if 'name' not in session:
+        return redirect('/login')
+
+    else:
+        userPosts = postsDB.find({'username': session['username']})
+        userProfile = usersDB.find_one({'username': session['username']})
+        return render_template('myposts.html', posts = userPosts, userProfile = userProfile)
+
+#My Posts
+@app.route('/writepost', methods=['GET', 'POST'])
+def writePost():
+
+    if 'name' not in session:
+        return redirect('/login')
+
+    else:
+        userProfile = usersDB.find_one({'username': session['username']})
+        if request.method == 'POST':
+            userPosts = postsDB.find({'username': session['username']})
+            return render_template('myposts.html', posts = userPosts, userProfile = userProfile)
+        else:
+            return render_template('writepost.html', userProfile = userProfile)
 
 #logout
 @app.route('/logout', methods=['GET', 'POST'])
