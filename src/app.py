@@ -157,7 +157,7 @@ def getUserPosts():
         userProfile = usersDB.find_one({'username': session['username']})
         return render_template('myposts.html', posts = userPosts, userProfile = userProfile)
 
-#My Posts
+#Write Post
 @app.route('/writepost', methods=['GET', 'POST'])
 def writePost():
 
@@ -167,10 +167,18 @@ def writePost():
     else:
         userProfile = usersDB.find_one({'username': session['username']})
         if request.method == 'POST':
-            userPosts = postsDB.find({'username': session['username']})
-            return render_template('myposts.html', posts = userPosts, userProfile = userProfile)
+            postInsert = postsDB.insert_one( { 'username': session['username'], 
+                'created_at': getCurrentDateTime(), 'updated_at': None, 'title': request.form['title'],
+                'content': request.form['content'], 'image': request.form['image']} )
+            flash('Post Submitted Successfully')
+            return redirect('/myposts')
         else:
             return render_template('writepost.html', userProfile = userProfile)
+
+def getCurrentDateTime():
+    currentDateTime = datetime.now()
+    dt_string = currentDateTime.strftime("%d/%m/%Y %H:%M:%S")
+    return dt_string
 
 #logout
 @app.route('/logout', methods=['GET', 'POST'])
