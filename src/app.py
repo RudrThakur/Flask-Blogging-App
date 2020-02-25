@@ -7,7 +7,7 @@ import re
 import hashlib, binascii
 from taskworker import *
 from db import *
-from mailapp import *
+from mailApp import *
 
 
 app = Flask(__name__)
