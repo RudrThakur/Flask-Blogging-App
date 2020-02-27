@@ -24,24 +24,26 @@ Home Page
             <div class="col-md-8 mx-auto col-12">
                 <ul class="list-unstyled">
                     {% for post in posts: %}
-                        <li class="cardbox">
-                            <div class="card-header">
-                                {{ post['title'] }}
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                       <img src="{{ post['image'] }}" class="img-fluid" width="300"></img> 
-                                    </div>
-                                    <div class="col-md-6">
-                                       <blockquote class="blockquote mb-0">
-                                         <p>{{ post['content'] }}.</p>
-                                         <footer class="blockquote-footer">Posted on <cite title="Posted on">{{ post['created_at'] }}</cite></footer>
-                                       </blockquote> 
+                        <a href="/fullpost?postId={{ post['_id'] }}">
+                            <li class="cardbox">
+                                <div class="card-header">
+                                    {{ post['title'] }}
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                           <img src="{{ post['image'] }}" class="img-fluid" width="300"></img> 
+                                        </div>
+                                        <div class="col-md-6">
+                                           <blockquote class="blockquote mb-0">
+                                             <p>{{ post['content'] }}.</p>
+                                             <footer class="blockquote-footer">Posted on <cite title="Posted on">{{ post['created_at'] }}</cite></footer>
+                                           </blockquote> 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        </a>
                      
                     {% endfor %}
                 </ul>

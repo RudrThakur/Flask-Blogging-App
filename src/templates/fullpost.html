@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}
+Full Post
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<div class="row" id="callforpaper">
+			<div class="col-md-10 col-12 mx-auto">
+				<h2>{{ post['title'] }}</h2>
+				<div class="row">
+					<div class="col-8">
+						<img src="{{ post['image'] }}"  alt="post image" class="img-fluid" width="400">
+					</div>
+					<div class="col-4">
+					    <blockquote class="blockquote mb-0">
+					        <p>{{ post['content'] }}.</p>
+					        <footer class="blockquote-footer">Posted on <cite title="Posted on">{{ post['created_at'] }}</cite></footer>
+					    </blockquote> 
+					</div>
+				</div>
+				<div class="comment-section mt-5 p-2">
+					<textarea name="" rows="4" class="form-control" placeholder="enter your comment here"></textarea>
+					<div class="float-right">
+						<button class="lbtn lbtn-accent-color">Comment</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

@@ -8,6 +8,7 @@ import hashlib, binascii
 from taskworker import *
 from db import *
 from mailApp import *
+from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
@@ -180,7 +181,18 @@ def getCurrentDateTime():
     currentDateTime = datetime.now()
     dt_string = currentDateTime.strftime("%d/%m/%Y %H:%M:%S")
     return dt_string
+#Full Post
+@app.route('/fullpost', methods=['GET'])
+def showFullPost():
 
+    if 'name' not in session:
+        return redirect('/login')
+
+    else:
+        postId = request.args.get('postId')
+        userProfile = usersDB.find_one({'username': session['username']})
+        userPost = postsDB.find_one({'_id': ObjectId(postId)})
+        return render_template('fullpost.html', post = userPost, userProfile = userProfile)
 #logout
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
