@@ -5,11 +5,9 @@ Write Post
 {% block body %}
     <!-- write post -->
 
-    <div class="container cardbox col-8 mx-auto">
-        <div class="container" id="post-write-box">
-            <h5 class="text-primary text-center w3-hover-text-lime" id="post-write-header">Write Something</h5>
-            <hr>
-            <div class="container">
+    <div class="container col-md-8 col-12 mx-auto">
+        <div class="cardbox" id="post-write-box">
+            <h5 class="text-primary bg-light p-2 text-center border-bottom" id="post-write-header">Write Something</h5>
                 <form action="/writepost" method="POST">
                     <div class="form-group">
                         <label for="title">Title:</label>
@@ -20,14 +18,13 @@ Write Post
                         <textarea name="content" class="form-control" rows="5"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="image">Add an Image URL (Example - https://source.unsplash.com/user/rudrthakur/O8PjuNKatJ0):</label>
+                        <label for="image" class="text-break">Add an Image URL (Example - https://source.unsplash.com/user/rudrthakur/O8PjuNKatJ0):</label>
                         <input type="text" class="form-control" id="image" name="image">
                     </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary">Post</button>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
 {% endblock %}
