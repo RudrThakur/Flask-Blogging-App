@@ -1,86 +1,98 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>
-        Register-Flask
-    </title>
+    <title>Register</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <body>
     <div class="container">
         {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-warning alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                {{message}}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        
-        {% block body %}{% endblock %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{message}}
         </div>
-    <div class="container m-auto p-4 w-50">
-        <div class="card m-auto p-4">
-            <form action="/register" method="POST">
-                <div class="login">
-                    <div class="login-screen">
-                        <div class="app-title container">
-                            <h1>Registration</h1>
-                        </div>
-                        <div class="container m-auto text-center">
-                            <h6>Please Enter your Details</h6>
-                        </div>
-          
-                        <div class="login-form">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" value="" placeholder="Username" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" value="" placeholder="Name" name="name">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" value="" placeholder="Password" name="password">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" value="" placeholder="Email"
-                                    name="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Phone</label>
-                                <input type="text" class="form-control" value="" placeholder="Phone"
-                                    name="phone">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">City</label>
-                                <input type="text" class="form-control" value="" placeholder="City"
-                                    name="city">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Occupation</label>
-                                <input type="text" class="form-control" value="" placeholder="Occupation"
-                                    name="occupation">
-                            </div>
-                            <div class="container text-center m-auto">
-                                <div class="form-group">
-                                    <input type="submit" value="Register" class="btn btn-primary">
-                                </div>
-                            </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
+    </div>
+    <!--trending movies  -->
+    <section id="callforpaper">
+        <div class="container">
+            <h1 class="text-primary text-center">Register here</h1>
+            <div class="text-center">
+                <em>Please enter your Details</em>
+            </div>
+            <div class="col-md-8 col-12 mx-auto">
+                <form action="/register" method="POST">
+                    <div class="form-group row p-3">
+                        <label for="username" class="col-2 mx-auto col-form-label"><i class="fas fa-user-tag"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="username" type="text" class="form-control" name="username" required autofocus placeholder="enter username">
                         </div>
                     </div>
-                </div>
-            </form>
-            <a href="/login">Already a User ? Login Here</a>
+                    <div class="form-group row p-3">
+                        <label for="name" class="col-2 mx-auto col-form-label"><i class="fas fa-user"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="name" type="text" class="form-control" name="name" required autofocus placeholder="enter name">
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="email" class="col-2 mx-auto col-form-label"><i class="fa fa-envelope"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="email" type="email" class="form-control" name="email" required autocomplete="email" autofocus placeholder="enter email-Id">
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="phone" class="col-2 mx-auto col-form-label"><i class="fa fa-phone"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="phone" type="tel" class="form-control" name="phone" required autocomplete="phone" autofocus placeholder="enter phone number">
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="city" class="col-2 mx-auto col-form-label"><i class="fa fa-city"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="city" type="text" class="form-control" name="city" required autocomplete="city" autofocus placeholder="enter city name">
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="occupation" class="col-2 mx-auto col-form-label"><i class="fa fa-briefcase"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="occupation" type="text" class="form-control" name="occupation" required autocomplete="occupation" autofocus placeholder="enter your occupation">
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="password" class="col-2 mx-auto col-form-label"><i class="fas fa-key"></i></label>
+                        <div class="col-10 mx-auto">
+                            <input id="password" type="password" class="form-control" name="password" required autofocus placeholder="enter password">
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <div class="col-4 float-right mx-auto">
+                            <button type="submit" class="lbtn lbtn-accent-color lbtn-small">
+                                Register
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <a href="/login">Already a User ? Login Here</a>
+            </div>
         </div>
-    </div>
+    </section>
+    <!-- enternal google fonts cdn links -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap" rel="stylesheet">
 </body>
 
 </html>

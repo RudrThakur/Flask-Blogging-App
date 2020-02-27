@@ -1,13 +1,17 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>
-        Login-Flask
-    </title>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <body>
     <div class="container">
@@ -15,48 +19,55 @@
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
             {{message}}
         </div>
         {% endfor %}
         {% endif %}
         {% endwith %}
-
         {% block body %}{% endblock %}
     </div>
-    <div class="container m-auto p-4 w-50">
-        <div class="card m-auto p-4">
-            <form action="/login" method="POST">
-                <div class="login">
-                    <div class="login-screen">
-                        <div class="app-title container">
-                            <h1>Login</h1>
-                        </div>
-                        <div class="container m-auto text-center">
-                            <h6>Please Enter your credentials</h6>
-                        </div>
-
-                        <div class="login-form">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" value="" placeholder="username" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" value="" placeholder="password"
-                                    name="password">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Log in" class="btn btn-primary">
-                            </div>
-                        </div>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-12 mx-auto">
+                <div class="text-center pt-5">
+                    <i class="fas fa-user-cog fa-4x"></i>
                 </div>
-            </form>
-            <a href="/register">New Here ? Please Register</a>
+                <div class="cardbox">
+                    <form action="/login" method="POST">
+                        <div class="login">
+                            <div class="login-screen">
+                                <div class="text-center">
+                                    <h4 class="login-title">Please enter your credentials</h4>
+                                </div>
+                                <div class="login-form">
+                                    <div class="form-group row p-3">
+                                        <label for="username" class="col-2 mx-auto col-form-label"><i class="fas fa-user"></i></label>
+                                        <div class="col-10 mx-auto">
+                                            <input id="name" type="text" class="form-control" name="username" required autofocus placeholder="enter username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row p-3">
+                                        <label for="password" class="col-2 mx-auto col-form-label"><i class="fas fa-key"></i></label>
+                                        <div class="col-10 mx-auto">
+                                            <input id="password" type="password" class="form-control" name="password" required autofocus placeholder="enter password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <input type="submit" value="Login" class="lbtn lbtn-pink-color">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <a href="/register">New Here ? Please Register</a>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- enternal google fonts cdn links -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap" rel="stylesheet">
 </body>
 
 </html>

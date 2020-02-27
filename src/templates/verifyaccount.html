@@ -1,78 +1,11 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-        Verify Account
-    </title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
-
-
-<body>
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
-            {{message}}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        {% block body %}{% endblock %}
-    </div>
-    <div class="modal fade" id="profilemodal" tabindex="-1" role="dialog" aria-labelledby="profilemodal"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container m-auto table-bordered">
-                        <div class="container m-auto p-2">
-                            <ul style="list-style: none;">
-                                <li><b>Username :</b> {{ userProfile['username']}}</li>
-                                <li><b>Name : </b>{{ userProfile['name']}}</li>
-                                <li><b>Email :</b> {{ userProfile['email']}}</li>
-                                <li><b>Phone :</b> {{ userProfile['phone']}}</li>
-                                <li><b>City :</b> {{ userProfile['city']}}</li>
-                                <li><b>Occupation :</b> {{ userProfile['occupation']}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container m-auto w-100">
-        <div class="card m-auto p-4">
-            <p>Hello, {{ userProfile['name'] }}</p>
-            <div class="text-right mb-4">
-                <a href="/logout" class="btn btn-danger">Logout</a>
-            </div>
-            <div class="text-left">
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#profilemodal">View Profile</a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-4 m-auto p-3">
+{% extends "layout.html" %}
+{% block title %}
+Account Verification
+{% endblock %}
+{% block body %}
+    <div class="container" style="min-height: 400px!important;">
+        <div class="row mt-5">
+            <div class="col-lg-4 mx-auto cardbox p-3">
                 <form action="/verifyaccount" method="POST">
                     <div class="form-group">
                         <label>Enter the Verification Code</label>
@@ -85,7 +18,4 @@
             </div>
         </div>
     </div>
-
-</body>
-
-</html>
+{% endblock %}

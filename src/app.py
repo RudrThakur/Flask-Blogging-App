@@ -23,10 +23,11 @@ def home():
         return render_template('login.html')
     else:
         userProfile = usersDB.find_one({'username' : session['username']})
+        allPosts = postsDB.find({})
 
         if userProfile['isActive']:
             flash('Logged In Successfully')
-            return render_template('index.html', userProfile = userProfile)
+            return render_template('index.html', posts = allPosts, userProfile = userProfile)
         else:
             flash('Please Verify Your Account')
             return render_template('verifyaccount.html', userProfile = userProfile)
@@ -48,7 +49,7 @@ def login():
                     userProfile = usersDB.find_one({'username': request.form['username']})
                     session['username'] = userProfile['username']
                     session['name'] = userProfile['name']
-                    logLastLogin.delay(session['username'])
+                    # logLastLogin.delay(session['username'])
                     return home()
                 else:
                     flash('Invalid Credentials')
@@ -86,7 +87,7 @@ def register():
             
             if usersList is None:
                 verificationCode = generateVerificationCode()
-                sendVerificationEmail(request.form['email'], verificationCode)
+                # sendVerificationEmail(request.form['email'], verificationCode)
                 userInsert = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
                 'password': hash_password(request.form['password']), 'email': request.form['email'], 'phone': request.form['phone'],
                 'city': request.form['city'], 'occupation': request.form['occupation'], 'isActive': False, 

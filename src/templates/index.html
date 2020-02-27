@@ -1,107 +1,51 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Welcome</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% extends "layout.html" %}
+{% block title %}
+Home Page
+{% endblock %}
+{% block body %}
 
-</head>
-<!-- Body -->
-<style>
-#post-write-header{
-    font-weight: lighter;
-    font-family: cursive;
-}
-</style>
-<body>
-
-    <!-- Messages -->
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
-            {{message}}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        {% block body %}{% endblock %}
+<!-- Messages -->
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" id="success-alert">
+      <button type="button" class="close" data-dismiss="alert">x</button>
+      <strong>Success! </strong> {{message}}
     </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
 
-    <!-- CSS Sidebar -->
-    <div class="w3-teal">
-        <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
-      
-    </div>
-
-    <div class="container w3-sidebar w3-bar-block" style="display:none" id="mySidebar">
-        <button onclick="w3_close()" class="w3-bar-item w3-button">Close &times;</button>
-        <a href="/" class="w3-bar-item w3-button text-primary">Home</a>
-        <a href="/writepost" class="w3-bar-item w3-button text-primary">Write Post</a>
-        <a href="/myposts" class="w3-bar-item w3-button text-primary">My Posts</a>
-        <a href="javascript:void(0)" class="w3-bar-item w3-button text-primary" data-toggle="modal" data-target="#profilemodal">View Profile</a>
-        <a href="/changepassword" class="w3-bar-item w3-button text-primary">Change Password</a>
-        <a href="/logout" class="w3-bar-item w3-button text-danger">Logout</a>
-    </div>
-    <div class="container m-auto w-100">
-        <div class="card mb-5 p-4">
-            <p>Hello, {{ userProfile['name'] }}</p>
-        </div>
-    </div>
-    <!-- Profile Modal -->
-    <div class="modal fade" id="profilemodal" tabindex="-1" role="dialog" aria-labelledby="profilemodal"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container m-auto table-bordered">
-                        <div class="container m-auto p-2">
-                            <ul style="list-style: none;">
-                                <li><b>Username :</b> {{ userProfile['username']}}</li>
-                                <li><b>Name : </b>{{ userProfile['name']}}</li>
-                                <li><b>Email :</b> {{ userProfile['email']}}</li>
-                                <li><b>Phone :</b> {{ userProfile['phone']}}</li>
-                                <li><b>City :</b> {{ userProfile['city']}}</li>
-                                <li><b>Occupation :</b> {{ userProfile['occupation']}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+    <!-- list of posts -->
+    <div class="container" id="myposts-box">
+        <div class="row">
+            <div class="col-md-8 mx-auto col-12">
+                <ul class="list-unstyled">
+                    {% for post in posts: %}
+                        <li class="cardbox">
+                            <div class="card-header">
+                                {{ post['title'] }}
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                       <img src="{{ post['image'] }}" class="img-fluid" width="300"></img> 
+                                    </div>
+                                    <div class="col-md-6">
+                                       <blockquote class="blockquote mb-0">
+                                         <p>{{ post['content'] }}.</p>
+                                         <footer class="blockquote-footer">Posted on <cite title="Posted on">{{ post['created_at'] }}</cite></footer>
+                                       </blockquote> 
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                     
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
-
-    <!-- Javascript -->
-    <script>
-        function w3_open() {
-          document.getElementById("mySidebar").style.width = "100%";
-          document.getElementById("mySidebar").style.display = "block";
-        }
-        
-        function w3_close() {
-          document.getElementById("mySidebar").style.display = "none";
-        }
-    </script>
-             
-</body>
-</html>
+{% endblock %}
