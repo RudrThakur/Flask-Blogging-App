@@ -4,6 +4,18 @@ Full Post
 {% endblock %}
 {% block body %}
 	<div class="container">
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-warning alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+			{{message}}
+		</div>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+	</div>
+	<div class="container">
 		<div class="row" id="callforpaper">
 			<div class="col-md-10 col-12 mx-auto">
 				<h2>{{ post['title'] }}</h2>
@@ -19,13 +31,61 @@ Full Post
 					</div>
 				</div>
 				<div class="comment-section mt-5 p-2">
-					<textarea name="" rows="4" class="form-control" placeholder="enter your comment here"></textarea>
-					<div class="float-right">
-						<button class="lbtn lbtn-accent-color">Comment</button>
-					</div>
+					<form action="/comment" method="POST">
+						<input type="hidden" name="postId" value="{{ post['_id'] }}">
+						<input type="text" class="form-control" name="comment" placeholder="Enter your comment here" required>
+						<div class="float-right">
+							<button class="lbtn lbtn-accent-color" type="submit">Comment</button>
+						</div>
+					</form>
 				</div>
+				<ul>
+				{% for postComment in postComments %}
+				<li>{{ postComment['username']}} <span>:</span>{{ postComment['content']}}</li>
+				<span style="font-size: 10px">
+					{% if postComment['updated_at'] %}
+					{{ postComment['updated_at']}}
+					{% else %}
+					{{ postComment['created_at']}}
+					{% endif %}
+				</span>
+				<a href="#" id="editcomment-btn" 
+				data-toggle="modal" data-target="#editcomment-modal" data-commentid="{{ postComment['_id'] }}">Edit</a>
+				<a href="deletecomment?commentId={{ postComment['_id'] }}">Delete</a>
+				{% endfor %}
+				</ul>
 			</div>
 		</div>
 	</div>
-
+<!-- Edit Comment Modal -->
+<div class="modal fade" id="editcomment-modal" tabindex="-1" role="dialog" aria-labelledby="editcomment-modal"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="editcomment-modal-title">Edit Comment</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form action="/editcomment" method="POST">
+				<input type="hidden" id="newcommentId">
+				<input type="text" name="newcomment" class="form-control">
+				<input type="submit" value="update">
+			</form>              
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+</div>
+</div>
+<script>
+	var editBtn = document.getElementById('editcomment-btn');
+	editBtn.onclick = function(){
+		var commentId = editBtn.getAttribute('data-commentid');
+		document.getElementById('newcommentId').value = commentId;
+	}
+</script>
 {% endblock %}

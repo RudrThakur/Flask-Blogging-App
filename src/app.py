@@ -16,6 +16,7 @@ app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = '1234'
 usersDB = databaseUsers()
 postsDB = databasePosts()
+commentsDB = databaseComments()
 
 #home
 @app.route('/')
@@ -181,6 +182,7 @@ def getCurrentDateTime():
     currentDateTime = datetime.now()
     dt_string = currentDateTime.strftime("%d/%m/%Y %H:%M:%S")
     return dt_string
+
 #Full Post
 @app.route('/fullpost', methods=['GET'])
 def showFullPost():
@@ -191,8 +193,27 @@ def showFullPost():
     else:
         postId = request.args.get('postId')
         userProfile = usersDB.find_one({'username': session['username']})
+        postComments = commentsDB.find({'postId' : ObjectId(postId)})
         userPost = postsDB.find_one({'_id': ObjectId(postId)})
-        return render_template('fullpost.html', post = userPost, userProfile = userProfile)
+        return render_template('fullpost.html', post = userPost, userProfile = userProfile, postComments = postComments)
+
+#Comment
+@app.route('/comment', methods=['POST'])
+def comment():
+
+    if 'name' not in session:
+        return redirect('/login')
+
+    else:
+        postId = request.form['postId']
+        userProfile = usersDB.find_one({'username': session['username']})
+        commentInsert = commentsDB.insert_one( { 'postId': ObjectId(postId), 
+                'created_at': getCurrentDateTime(), 'updated_at': None, 
+                'username' : session['username'],'content': request.form['comment']
+                })
+        flash('Comment Successful')
+        return redirect('/fullpost?postId='+ postId)
+
 #logout
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
