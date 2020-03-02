@@ -14,7 +14,6 @@
     font-family: 'Nunito', sans-serif;
     font-weight: 200;
   }
-  
   .content 
   {
    text-align: center;
@@ -60,7 +59,6 @@
       border-radius: 10px;
       font-size: 15px;
       font-weight: 600;
-      text-transform: uppercase;
       padding: 9px 26px;
       margin: 5px 10px;
       display: inline-block;
@@ -97,6 +95,22 @@
       color: #ffffff;
       background-color: #F22F06;
   }
+  .lbtn-red-color{
+    background-color:  #F22F06;
+    color: #ffffff;
+  }
+  .lbtn-red-color:hover, .lbtn-red-color:focus {
+      color: #ffffff;
+      background-color: #F22F00;
+  }
+  .lbtn-blue-color {
+      color: #ffffff;
+      background-color: #0000ff;
+  }
+  .lbtn-blue-color:hover, .lbtn-blue-color:focus {
+      color: #ffffff;
+      background-color: #00000f;
+  }
   .lbtn-shadow {
       -webkit-box-shadow: 0 9px 18px rgba(0, 0, 0, 0.08);
       box-shadow: 0 9px 18px rgba(0, 0, 0, 0.08);
@@ -116,6 +130,9 @@
       text-transform: none;
       padding: 8px 15px;
       margin: 2px 4px;
+  }
+  a:hover{
+    text-decoration: none!important;
   }
   /* navbar ///////////////////////// */
   .navbar-dark{
@@ -144,11 +161,11 @@
       color: #ffffff;
   }
   .login-title{
-    background-color:  #F0786F;
-    color: #ffffff;
     padding: 3px;
-    display: inline-block;
-    border-radius: 8px;
+    display: block;
+    color: #000;
+    font-weight: 600;
+    border-bottom: 1px solid gray;
   }
   .fontbig{
     font-size: 35px;
@@ -310,7 +327,7 @@
 
 .sidenav a:hover {
   color: #ffffff;
-  background-color: #F22F06;
+  background-color: #0000ff;
   display: block;
   border-radius: 8px;
 }
@@ -328,7 +345,7 @@
 #footer {
     background-color: #0d1e30;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
     text-align: center;
 }
 
@@ -513,6 +530,20 @@
 #footer .social-menu li a:hover [class*="fa"], #footer .social-menu li a:focus [class*="fa"] {
     color: #41576e;
 }
+
+/* scrollbar */
+
+::-webkit-scrollbar{
+  width: 12px;
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(transparent,#0000ff);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover{
+ background: linear-gradient(#F22F00;,#0000ff); 
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}

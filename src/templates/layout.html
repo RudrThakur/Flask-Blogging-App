@@ -32,56 +32,67 @@
     </nav>
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="img">
+            <img src="{{url_for('static',filename='img/lighthouse.svg')}}" class="img-fluid" width="200" style="max-height: 80px!important;">
+        </div>
         <a class="sideitem" href="/"><i class="fas fa-home mr-4 float-left p-2"></i>Home</a>
         <a class="sideitem" href="/writepost"><i class="fas fa-edit mr-4 float-left p-2"></i>Write Post</a>
         <a class="sideitem" href="/myposts"><i class="fas fa-list mr-4 float-left p-2"></i>My Posts</a>
         <a class="sideitem" href="javascript:void(0)" data-toggle="modal" data-target="#profilemodal"><i class="fas fa-eye mr-4 float-left p-2"></i> View Profile</a>
         <a class="sideitem" href="/changepassword"><i class="fas fa-key float-left p-2 mr-2"></i>Change Password</a>
-        <a class="text-center lbtn lbtn-pink-color my-auto text-white" href="/logout"></i>Logout</a>
+        <div class="align-bottom" style="margin-top: 80px;">
+          <a class="text-center lbtn lbtn-red-color text-white" href="/logout"><i class="fas fa-sign-out-alt p-2 mr-2"></i>Logout</a>
+        </div>
     </div>
     <!-- Profile Modal -->
     <div class="modal fade" id="profilemodal" tabindex="-1" role="dialog" aria-labelledby="profilemodal"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content bg-transparent border-0 cardbox">
+              <div class="p-3">
+                <h3 class="modal-title" id="exampleModalLabel">Profile</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
                 <div class="modal-body">
-                    <table class="table">
-                      <thead class="thead-light">
-                        <tr>
-                          <th>Username</th>
-                          <td>{{ userProfile['username']}} </td>
-                        </tr>
-                        <tr>
-                          <th>Name</th>
-                          <td>{{ userProfile['name']}}</td>
-                        </tr>
-                        <tr>
-                          <th>Email</th>
-                          <td>{{ userProfile['email']}}</td>
-                        </tr>
-                        <tr>
-                          <th>Phone</th>
-                          <td>{{ userProfile['phone']}}</td>
-                        </tr>
-                        <tr>
-                          <th>City</th>
-                          <td>{{ userProfile['city']}}</td>
-                        </tr>
-                        <tr>
-                          <th>Occupation</th>
-                          <td>{{ userProfile['occupation']}}</td>
-                        </tr>                          
-                      </thead>
-                    </table>                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <div class="row">
+                    <div class="col-md-6 col-12 my-auto">
+                      <div class="img">
+                          <img src="{{url_for('static',filename='img/forgotpass.svg')}}" class="img-fluid">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12 mx-auto">
+                      <table class="table">
+                        <thead class="thead-light">
+                          <tr>
+                            <th>Username</th>
+                            <td>{{ userProfile['username']}} </td>
+                          </tr>
+                          <tr>
+                            <th>Name</th>
+                            <td>{{ userProfile['name']}}</td>
+                          </tr>
+                          <tr>
+                            <th>Email</th>
+                            <td>{{ userProfile['email']}}</td>
+                          </tr>
+                          <tr>
+                            <th>Phone</th>
+                            <td>{{ userProfile['phone']}}</td>
+                          </tr>
+                          <tr>
+                            <th>City</th>
+                            <td>{{ userProfile['city']}}</td>
+                          </tr>
+                          <tr>
+                            <th>Occupation</th>
+                            <td>{{ userProfile['occupation']}}</td>
+                          </tr>                          
+                        </thead>
+                      </table>   
+                    </div>
+                  </div>                 
                 </div>
             </div>
         </div>
@@ -96,12 +107,12 @@
     <footer>
       <div class="container-fluid position-static" id="footer">
         <div class="row">
-          <div class="col-12 mx-auto mb-2">
+          <div class="col-md-6 col-12 mx-auto">
             <small class="text-white"> © 2020 made with <i class="fa fa-heart text-danger" aria-hidden="true"></i> by <span
-                class="text-white font-weight-bold">Broke guys webdev</span></small>
+                class="text-white font-weight-bold">RULE WEBDEV</span></small>
                 <p class="text-primary font-weight-bold">Be Original</p>
           </div>
-          <div class="col-md-12 text-center mb-3">
+          <div class="col-md-6 mx-auto col-12 text-center">
             <a href="#" target="_blank"
               class="btn btn-sm bg-light text-dark shadow-sm rounded-circle text-primary m-2"><i class="fab fa-instagram menu-icon"></i></a>
             <a href="#" target="_blank"
@@ -117,6 +128,21 @@
         </div>
       </div>
     </footer>
+    <!-- please wait modal -->
+    <div class="modal fade" id="pleaseWait" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content bg-transparent cardbox border-0">
+          <div class="modal-body text-center">
+            Please wait request is being processed
+            <div class="mx-auto">
+                <div class="spinner-grow text-primary"></div>
+                <div class="spinner-grow text-primary"></div>
+                <div class="spinner-grow text-primary"></div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
     <!-- Javascript -->
     <script>
     $(document).ready(function() {
@@ -132,9 +158,26 @@
       document.getElementById("mySidenav").style.width = "0";
     }
     </script>
+    <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
+    <script>
+    $(function(){
+         $('#fullpostbtn').click(function(event) {
+          $('#pleaseWait').modal('show');
+          return true;
+           })              
+            
+         });
+    </script>
     <!-- enternal google fonts cdn links -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap" rel="stylesheet">
+    {% block javascript %}
+
+    {% endblock %}
              
 </body>
 </html>

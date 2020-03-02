@@ -89,7 +89,7 @@ def register():
             
             if usersList is None:
                 verificationCode = generateVerificationCode()
-                # sendVerificationEmail(request.form['email'], verificationCode)
+                sendVerificationEmail(request.form['email'], verificationCode)
                 userInsert = usersDB.insert_one( { 'username': request.form['username'], 'name': request.form['name'], 
                 'password': hash_password(request.form['password']), 'email': request.form['email'], 'phone': request.form['phone'],
                 'city': request.form['city'], 'occupation': request.form['occupation'], 'isActive': False, 
@@ -174,7 +174,7 @@ def writePost():
                 'created_at': getCurrentDateTime(), 'updated_at': None, 'title': request.form['title'],
                 'content': request.form['content'], 'image': request.form['image']} )
             flash('Post Submitted Successfully')
-            return redirect('/myposts')
+            return redirect('/')
         else:
             return render_template('writepost.html', userProfile = userProfile)
 
@@ -219,6 +219,11 @@ def comment():
 def logout():
     session.clear()
     return render_template('login.html')
+
+#forgotpassword
+@app.route('/forgotpassword', methods=['GET', 'POST'])
+def resetpassword():
+    return render_template('forgotpassword.html')    
 
 #main
 if __name__ == "__main__":

@@ -28,71 +28,104 @@
         {% block body %}{% endblock %}
     </div>
     <!--trending movies  -->
-    <section id="callforpaper">
         <div class="container">
-            <h1 class="text-primary text-center">Register here</h1>
-            <div class="text-center">
-                <em>Please enter your Details</em>
-            </div>
-            <div class="col-md-8 col-12 mx-auto">
-                <form action="/register" method="POST">
-                    <div class="form-group row p-3">
-                        <label for="username" class="col-2 mx-auto col-form-label"><i class="fas fa-user-tag"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="username" type="text" class="form-control" name="username" required autofocus placeholder="enter username">
-                        </div>
+            <div class="row">
+                <div class="col-md-5 d-md-block">
+                    <div class="p-4 my-3">
+                        <h1 class="text-center">Register here</h1>
                     </div>
-                    <div class="form-group row p-3">
-                        <label for="name" class="col-2 mx-auto col-form-label"><i class="fas fa-user"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="name" type="text" class="form-control" name="name" required autofocus placeholder="enter name">
-                        </div>
+                    <div class="img">
+                        <img src="{{url_for('static',filename='img/register.svg')}}" class="img-fluid">
                     </div>
-                    <div class="form-group row p-3">
-                        <label for="email" class="col-2 mx-auto col-form-label"><i class="fa fa-envelope"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="email" type="email" class="form-control" name="email" required autocomplete="email" autofocus placeholder="enter email-Id">
-                        </div>
+                    <div class="p-4 mt-5">
+                       <a href="/login" class="p-4">Already a User ? Login Here</a> 
                     </div>
-                    <div class="form-group row p-3">
-                        <label for="phone" class="col-2 mx-auto col-form-label"><i class="fa fa-phone"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="phone" type="tel" class="form-control" name="phone" required autocomplete="phone" autofocus placeholder="enter phone number">
-                        </div>
+                </div>
+                <div class="col-md-7 col-12 mx-auto px-md-3" id="callforpaper">
+                    <div class="text-center">
+                        <em>Please enter your details correctly</em>
                     </div>
-                    <div class="form-group row p-3">
-                        <label for="city" class="col-2 mx-auto col-form-label"><i class="fa fa-city"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="city" type="text" class="form-control" name="city" required autocomplete="city" autofocus placeholder="enter city name">
+                    <form action="/register" method="POST">
+                        <div class="form-group row p-3">
+                            <label for="username" class="col-2 mx-auto col-form-label"><i class="fas fa-user-tag"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="username" type="text" class="form-control" name="username" required autofocus placeholder="enter username">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row p-3">
-                        <label for="occupation" class="col-2 mx-auto col-form-label"><i class="fa fa-briefcase"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="occupation" type="text" class="form-control" name="occupation" required autocomplete="occupation" autofocus placeholder="enter your occupation">
+                        <div class="form-group row p-3">
+                            <label for="name" class="col-2 mx-auto col-form-label"><i class="fas fa-user"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="name" type="text" class="form-control" name="name" required autofocus placeholder="enter name">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row p-3">
-                        <label for="password" class="col-2 mx-auto col-form-label"><i class="fas fa-key"></i></label>
-                        <div class="col-10 mx-auto">
-                            <input id="password" type="password" class="form-control" name="password" required autofocus placeholder="enter password">
+                        <div class="form-group row p-3">
+                            <label for="email" class="col-2 mx-auto col-form-label"><i class="fa fa-envelope"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="email" type="email" class="form-control" name="email" required autocomplete="email" autofocus placeholder="enter email-Id">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row p-3">
-                        <div class="col-4 float-right mx-auto">
-                            <button type="submit" class="lbtn lbtn-accent-color lbtn-small">
-                                Register
-                            </button>
+                        <div class="form-group row p-3">
+                            <label for="phone" class="col-2 mx-auto col-form-label"><i class="fa fa-phone"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="phone" type="tel" class="form-control" name="phone" required autocomplete="phone" autofocus placeholder="enter phone number">
+                            </div>
                         </div>
-                    </div>
-                </form>
-                <a href="/login">Already a User ? Login Here</a>
-            </div>
+                        <div class="form-group row p-3">
+                            <label for="city" class="col-2 mx-auto col-form-label"><i class="fa fa-city"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="city" type="text" class="form-control" name="city" required autocomplete="city" autofocus placeholder="enter city name">
+                            </div>
+                        </div>
+                        <div class="form-group row p-3">
+                            <label for="occupation" class="col-2 mx-auto col-form-label"><i class="fa fa-briefcase"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="occupation" type="text" class="form-control" name="occupation" required autocomplete="occupation" autofocus placeholder="enter your occupation">
+                            </div>
+                        </div>
+                        <div class="form-group row p-3">
+                            <label for="password" class="col-2 mx-auto col-form-label"><i class="fas fa-key"></i></label>
+                            <div class="col-10 mx-auto">
+                                <input id="password" type="password" class="form-control" name="password" required autofocus placeholder="enter password">
+                            </div>
+                        </div>
+                        <div class="form-group row p-3">
+                            <div class="col-4 float-right mx-auto">
+                                <button type="submit" class="lbtn lbtn-blue-color lbtn-small d-block">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
         </div>
-    </section>
+    </div>
+    <!-- please wait modal -->
+    <div class="modal fade" id="pleaseWait" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content bg-transparent cardbox border-0">
+          <div class="modal-body text-center">
+            Please wait request is being processed
+            <div class="mx-auto">
+                <div class="spinner-grow text-primary"></div>
+                <div class="spinner-grow text-primary"></div>
+                <div class="spinner-grow text-primary"></div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
     <!-- enternal google fonts cdn links -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap" rel="stylesheet">
+    <script>
+    $(function(){
+         $('form').on('submit', function () {                   
+              $('#pleaseWait').modal('show');
+              return true;
+         });
+     });
+    </script>
+
 </body>
 
 </html>

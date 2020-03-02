@@ -3,16 +3,24 @@
 Account Verification
 {% endblock %}
 {% block body %}
-    <div class="container" style="min-height: 400px!important;">
-        <div class="row mt-5">
-            <div class="col-lg-4 mx-auto cardbox p-3">
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-md-6 d-md-block p-5 ">
+                <div class="img">
+                    <img src="{{url_for('static',filename='img/confirmpass.svg')}}" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-4 col-12 p-4 my-auto" id="callforpaper">
                 <form action="/verifyaccount" method="POST">
                     <div class="form-group">
-                        <label>Enter the Verification Code</label>
-                        <input type="password" class="form-control" name="verification_code" id="verification_code">
+                        <label class="font-weight-bolder">Enter the Verification Code</label>
+                        <div class="form-group">
+                            
+                            <input type="password" class="form-control" name="verification_code" id="verification_code">                          
+                        </div>
                     </div>
                     <div class="form-group text-center">
-                        <input type="submit" class="btn btn-success" value="Verify">
+                        <input type="submit" class="lbtn btn-success lbtn-small" value="Verify">
                     </div>
                 </form>
             </div>
