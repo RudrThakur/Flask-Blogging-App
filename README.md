@@ -1,9 +1,2 @@
 # RuLe Blogger
-
-Pull the code and Enjoy !
-
-When Engineers are Broke :)
-
-WEB DEVS HERE
-
-Made By Rudr & Lekh with Love <3
+Blogging Application built in Flask, Celery ,RabbitMQ & MongoDB
